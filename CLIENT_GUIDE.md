@@ -139,12 +139,39 @@ GitHub Pages бесплатен для открытых проектов и на
 
 ## 8. Доступы (хранить в надёжном месте)
 
+### Хостинг и код
+
 - **GitHub (код сайта):** аккаунт `maservice` → https://github.com/maservice/maservice
-- **Cloudflare (домен, SSL, кэш):** https://dash.cloudflare.com
-- **Google Tag Manager (счётчики):** https://tagmanager.google.com (контейнер `GTM-WFGJFGJG`)
-- **Яндекс.Метрика:** https://metrika.yandex.ru (после создания счётчика)
+- **GitHub Pages настройки:** https://github.com/maservice/maservice/settings/pages
+- **GitHub Actions (история сборок):** https://github.com/maservice/maservice/actions
+
+### Домен, SSL, кэш
+
+- **Cloudflare (панель):** https://dash.cloudflare.com
+- **Cloudflare → домен maservice.by:** https://dash.cloudflare.com/?to=/:account/maservice.by
+- **Cloudflare → DNS-записи:** https://dash.cloudflare.com/?to=/:account/maservice.by/dns/records
+- **Cloudflare → SSL/TLS:** https://dash.cloudflare.com/?to=/:account/maservice.by/ssl-tls
+- **Cloudflare → Redirect Rules:** https://dash.cloudflare.com/?to=/:account/maservice.by/rules/redirect-rules
+- **Cloudflare → Caching:** https://dash.cloudflare.com/?to=/:account/maservice.by/caching
+- **Cloudflare → Analytics:** https://dash.cloudflare.com/?to=/:account/maservice.by/analytics
+
+### Аналитика
+
+- **Google Tag Manager (контейнер `GTM-WFGJFGJG`):** https://tagmanager.google.com
+- **Яндекс.Метрика (счётчик `112675558`):** https://metrika.yandex.ru/list
+- **Яндекс.Метрика → отчёт по счётчику:** https://metrika.yandex.ru/dashboard?id=112675558
+- **Яндекс.Метрика → Вебвизор:** https://metrika.yandex.ru/visit?id=112675558
+- **Яндекс.Метрика → цели:** https://metrika.yandex.ru/goal?id=112675558
+
+### Индексация в поисковиках
+
 - **Яндекс.Вебмастер:** https://webmaster.yandex.ru
+- **Яндекс.Вебмастер → сайт maservice.by:** https://webmaster.yandex.ru/site/https://maservice.by/
 - **Google Search Console:** https://search.google.com/search-console
+
+### Регистратор домена
+
+- Домен `maservice.by` зарегистрирован у регистратора (указать здесь: название регистратора и ссылку на личный кабинет). Nameservers делегированы в Cloudflare.
 
 ---
 
