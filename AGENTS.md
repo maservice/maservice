@@ -86,8 +86,9 @@ relatedServices: string[]   # slug связанных услуг (для Interna
 
 ### Аналитика — `src/components/Analytics.astro`
 
-Заглушка с `YANDEX_METRIKA_ID`. Активируется после замены на реальный номер счётчика.
-Цели: `click_phone`, `click_messenger`, `click_map` (через `reachGoal`).
+Яндекс.Метрика, счётчик `112675558` для maservice.by. Встроен в `Layout.astro` через `<Analytics />`.
+Цели (через `reachGoal`): `click_phone`, `click_messenger`, `click_map`.
+GTM-контейнер `GTM-WFGJFGJG` подключён напрямую в `Layout.astro` (`<head>` + noscript в `<body>`).
 
 ### a11y (WCAG 2.1)
 

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Руководство заказчика сайта maservice.by</title>
+<style>
+  :root { --accent:#2563eb; --bg:#f8fafc; --card:#fff; --border:#e2e8f0; --muted:#64748b; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height:1.6; color:#0f172a; background:var(--bg); margin:0; padding:0; }
+  .container { max-width: 880px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 2rem; margin: 0 0 8px; }
+  h2 { font-size: 1.4rem; margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--accent); display:inline-block; }
+  h3 { font-size: 1.1rem; margin: 24px 0 8px; color:#1e293b; }
+  p, li { color:#1e293b; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { background:#eef2ff; color:#3730a3; padding:2px 6px; border-radius:4px; font-family: "Consolas", "Monaco", monospace; font-size:0.9em; }
+  .lead { color: var(--muted); margin-top:0; }
+  table { width:100%; border-collapse: collapse; margin: 12px 0; background:var(--card); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  th, td { padding: 10px 14px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top; }
+  th { background:#f1f5f9; font-weight:600; }
+  tr:last-child td { border-bottom: none; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding: 18px 22px; margin: 16px 0; }
+  .card h3 { margin-top:0; }
+  ul { padding-left: 22px; }
+  li { margin: 4px 0; }
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding-left: 28px; position: relative; margin: 8px 0; }
+  .checklist li::before { content: "☐"; position:absolute; left:0; top:0; font-size:1.2em; color: var(--accent); }
+  .badge { display:inline-block; background:var(--accent); color:#fff; padding:2px 10px; border-radius:12px; font-size:0.85em; margin-left:8px; }
+  .muted { color: var(--muted); }
+  hr { border:none; border-top:1px solid var(--border); margin: 32px 0; }
+  .toc { background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding: 14px 20px; margin: 20px 0 32px; }
+  .toc ol { margin: 6px 0 0; padding-left: 22px; }
+  .toc a { color:#1e40af; }
+  footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Руководство заказчика сайта maservice.by</h1>
+  <p class="lead">Документ описывает, где и как размещён сайт, какие сервисы подключены и где находятся панели управления. Без технических подробностей — только то, что нужно знать для повседневной работы.</p>
+
+  <div class="toc">
+    <strong>Содержание</strong>
+    <ol>
+      <li><a href="#addr">Адрес сайта</a></li>
+      <li><a href="#hosting">Где физически размещён сайт</a></li>
+      <li><a href="#cf">Cloudflare — что это и зачем</a></li>
+      <li><a href="#code">Где хранится код сайта</a></li>
+      <li><a href="#analytics">Счётчики и сервисы аналитики</a></li>
+      <li><a href="#cheatsheet">Где что меняется</a></li>
+      <li><a href="#checklist">Что нужно сделать заказчику</a></li>
+      <li><a href="#access">Доступы</a></li>
+      <li><a href="#summary">Краткое резюме</a></li>
+    </ol>
+  </div>
+
+  <h2 id="addr">1. Адрес сайта</h2>
+  <ul>
+    <li><strong>Основной домен:</strong> <a href="https://maservice.by">https://maservice.by</a></li>
+    <li><strong>С www:</strong> <a href="https://www.maservice.by">https://www.maservice.by</a> <span class="muted">(автоматически перенаправляет на основной домен)</span></li>
+  </ul>
+  <p>Сайт открывается с любого устройства, адаптивный (телефон/планшет/компьютер).</p>
+
+  <h2 id="hosting">2. Где физически размещён сайт</h2>
+  <p>Сайт состоит из готовых файлов (HTML, картинки, иконки). Эти файлы хранятся и раздаются бесплатно через <strong>GitHub Pages</strong> — сервис компании GitHub.</p>
+  <ul>
+    <li><strong>Хостинг файлов сайта:</strong> GitHub Pages (США, глобальная сеть доставки)</li>
+    <li><strong>Домен и защита:</strong> Cloudflare (см. ниже)</li>
+  </ul>
+  <p>GitHub Pages бесплатен для открытых проектов и надёжно работает для небольших сайтов-визиток. Платить за хостинг не нужно.</p>
+
+  <h2 id="cf">3. Cloudflare — что это и зачем</h2>
+  <p><strong>Cloudflare</strong> — это сервис, который стоит «перед» сайтом и выполняет четыре задачи:</p>
+  <ol>
+    <li><strong>DNS (адресация).</strong> Именно Cloudflare управляет доменом <code>maservice.by</code> — указывает, куда ведёт адрес.</li>
+    <li><strong>Защита.</strong> Cloudflare поглощает атаки (DDoS), фильтрует ботов, скрывает реальный сервер.</li>
+    <li><strong>Скорость.</strong> Картинки и страницы кэшируются на серверах Cloudflare по всему миру — сайт открывается быстрее для посетителей из разных регионов.</li>
+    <li><strong>SSL-сертификат (https).</strong> Замок в адресной строке и защищённое соединение выдаётся именно Cloudflare, автоматически и бесплатно.</li>
+  </ol>
+
+  <h3>Где панель Cloudflare</h3>
+  <ul>
+    <li><strong>Адрес:</strong> <a href="https://dash.cloudflare.com">https://dash.cloudflare.com</a></li>
+    <li><strong>Вход:</strong> по логину и паролю, которые вы создавали при регистрации</li>
+    <li><strong>Внутри выбрать домен:</strong> <code>maservice.by</code></li>
+  </ul>
+  <p>Что можно делать в панели Cloudflare:</p>
+  <ul>
+    <li><strong>DNS</strong> — список адресов (записей) домена. Менять без необходимости не нужно.</li>
+    <li><strong>SSL/TLS</strong> — настройки защищённого соединения и сертификата.</li>
+    <li><strong>Rules → Redirect Rules</strong> — правило перенаправления <code>www</code> → основной домен.</li>
+    <li><strong>Analytics</strong> — посещаемость на уровне Cloudflare (количество запросов, страна, трафик).</li>
+    <li><strong>Caching</strong> — управление кэшем (можно очистить, если сайт не обновился).</li>
+  </ul>
+
+  <h2 id="code">4. Где хранится код сайта</h2>
+  <p>Исходный код сайта лежит в репозитории <strong>GitHub</strong>:</p>
+  <ul>
+    <li><strong>Адрес:</strong> <a href="https://github.com/maservice/maservice">https://github.com/maservice/maservice</a></li>
+    <li><strong>Вход:</strong> по логину <code>maservice</code> (отдельный аккаунт, созданный под клиентский проект)</li>
+  </ul>
+  <p>В репозитории две основные ветки:</p>
+  <ul>
+    <li><strong>main</strong> — исходный код сайта (шаблоны, тексты, картинки, настройки)</li>
+    <li><strong>gh-pages</strong> — готовая собранная версия сайта, которую видят посетители (генерируется автоматически)</li>
+  </ul>
+  <p>При любых изменениях в <code>main</code> сайт автоматически пересобирается и публикуется — вручную ничего делать не нужно.</p>
+
+  <h2 id="analytics">5. Какие счётчики и сервисы аналитики подключены</h2>
+
+  <div class="card">
+    <h3>5.1. Google Tag Manager (GTM) <span class="badge">встроен</span></h3>
+    <p><strong>GTM</strong> — это «контейнер», через который можно подключать разные счётчики и пиксели (Яндекс.Метрика, Google Analytics, рекламные пиксели и т.д.) без правки сайта.</p>
+    <ul>
+      <li><strong>ID контейнера:</strong> <code>GTM-WFGJFGJG</code></li>
+      <li><strong>Уже встроен в сайт</strong> на всех страницах</li>
+      <li><strong>Панель GTM:</strong> <a href="https://tagmanager.google.com">https://tagmanager.google.com</a></li>
+      <li><strong>Вход:</strong> Google-аккаунт, к которому привязан контейнер</li>
+    </ul>
+    <p>Через GTM можно:</p>
+    <ul>
+      <li>Добавлять новые счётчики без программиста</li>
+      <li>Управлять пикселями рекламы</li>
+      <li>Настраивать отслеживание событий (клики, прокрутка, формы)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>5.2. Яндекс.Метрика <span class="badge" style="background:#10b981;">встроен</span></h3>
+    <p>Счётчик <strong>уже встроен в сайт</strong> на всех страницах и активирован.</p>
+    <ul>
+      <li><strong>Номер счётчика:</strong> <code>112675558</code></li>
+      <li><strong>Панель:</strong> <a href="https://metrika.yandex.ru">https://metrika.yandex.ru</a></li>
+      <li><strong>Вход:</strong> Яндекс-аккаунт, к которому привязан счётчик</li>
+    </ul>
+    <p>На сайте настроены цели (отслеживаются автоматически):</p>
+    <ul>
+      <li><code>click_phone</code> — клик по номеру телефона</li>
+      <li><code>click_messenger</code> — клик по мессенджеру (Viber/Telegram/WhatsApp)</li>
+      <li><code>click_map</code> — клик по карте/маршруту</li>
+    </ul>
+    <p>В панели Метрики доступны: Вебвизор (запись действий посетителей), карта кликов, отчёты по источникам трафика, страницам, времени на сайте.</p>
+  </div>
+
+  <div class="card">
+    <h3>5.3. Подтверждение домена в Яндекс.Вебмастере <span class="badge" style="background:#10b981;">готово</span></h3>
+    <p>На сайте размещён файл подтверждения <code>yandex_73064c36d4571327.html</code> — он доступен по адресу:</p>
+    <ul>
+      <li><a href="https://maservice.by/yandex_73064c36d4571327.html">https://maservice.by/yandex_73064c36d4571327.html</a></li>
+    </ul>
+    <p>Это позволяет добавить сайт в <strong>Яндекс.Вебмастер</strong>:</p>
+    <ul>
+      <li><strong>Адрес:</strong> <a href="https://webmaster.yandex.ru">https://webmaster.yandex.ru</a></li>
+      <li><strong>Назначение:</strong> проверка индексации, ошибки сканирования, позиция в поиске Яндекса</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>5.4. Google Search Console <span class="badge" style="background:#f59e0b;">рекомендуется</span></h3>
+    <p>Для отслеживания индексации в Google:</p>
+    <ul>
+      <li><strong>Адрес:</strong> <a href="https://search.google.com/search-console">https://search.google.com/search-console</a></li>
+      <li><strong>Способ подтверждения:</strong> через запись DNS в Cloudflare (TXT-запись) или через GTM</li>
+    </ul>
+  </div>
+
+  <h2 id="cheatsheet">6. Где что меняется (краткая шпаргалка)</h2>
+  <table>
+    <thead>
+      <tr><th>Что нужно изменить</th><th>Где это делается</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Текст на странице</td><td>Репозиторий GitHub → соответствующий файл в <code>src/pages/</code></td></tr>
+      <tr><td>Тексты услуг</td><td>Репозиторий GitHub → <code>src/content/services/*.md</code></td></tr>
+      <tr><td>Телефон, адрес, часы работы, email</td><td>Репозиторий GitHub → <code>src/data/siteConfig.ts</code></td></tr>
+      <tr><td>Картинки услуг</td><td>Репозиторий GitHub → <code>public/images/services/</code></td></tr>
+      <tr><td>Редирект <code>www</code> → основной домен</td><td>Cloudflare → Rules → Redirect Rules</td></tr>
+      <tr><td>SSL-сертификат</td><td>Cloudflare → SSL/TLS (выдаётся автоматически)</td></tr>
+      <tr><td>Счётчики аналитики</td><td>Google Tag Manager → <a href="https://tagmanager.google.com">tagmanager.google.com</a></td></tr>
+      <tr><td>Индексация в Яндексе</td><td>Яндекс.Вебмастер → <a href="https://webmaster.yandex.ru">webmaster.yandex.ru</a></td></tr>
+      <tr><td>Индексация в Google</td><td>Google Search Console → <a href="https://search.google.com/search-console">search.google.com/search-console</a></td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="checklist">7. Что нужно сделать заказчику (чек-лист)</h2>
+  <ul class="checklist">
+    <li><s>Создать счётчик Яндекс.Метрики</s> — уже создан и встроен, счётчик <code>112675558</code></li>
+    <li>Добавить сайт в Яндекс.Вебмастер (файл подтверждения уже на месте)</li>
+    <li>Добавить сайт в Google Search Console (через запись DNS в Cloudflare)</li>
+    <li>Проверить, что сайт открывается по <code>https://maservice.by</code> без предупреждений браузера</li>
+    <li>При необходимости — передать доступы к GTM и Cloudflare новому подрядчику</li>
+  </ul>
+
+  <h2 id="access">8. Доступы (хранить в надёжном месте)</h2>
+  <ul>
+    <li><strong>GitHub (код сайта):</strong> аккаунт <code>maservice</code> → <a href="https://github.com/maservice/maservice">github.com/maservice/maservice</a></li>
+    <li><strong>Cloudflare (домен, SSL, кэш):</strong> <a href="https://dash.cloudflare.com">dash.cloudflare.com</a></li>
+    <li><strong>Google Tag Manager (счётчики):</strong> <a href="https://tagmanager.google.com">tagmanager.google.com</a> (контейнер <code>GTM-WFGJFGJG</code>)</li>
+    <li><strong>Яндекс.Метрика:</strong> <a href="https://metrika.yandex.ru">metrika.yandex.ru</a> (после создания счётчика)</li>
+    <li><strong>Яндекс.Вебмастер:</strong> <a href="https://webmaster.yandex.ru">webmaster.yandex.ru</a></li>
+    <li><strong>Google Search Console:</strong> <a href="https://search.google.com/search-console">search.google.com/search-console</a></li>
+  </ul>
+
+  <h2 id="summary">9. Краткое резюме</h2>
+  <ul>
+    <li>Сайт <strong>бесплатно</strong> размещён на GitHub Pages</li>
+    <li>Перед ним стоит <strong>Cloudflare</strong> — даёт SSL, защиту и скорость</li>
+    <li>Аналитика собирается через <strong>Google Tag Manager</strong> (контейнер уже встроен)</li>
+    <li><strong>Яндекс.Метрика</strong> — подготовлена, нужно только создать счётчик</li>
+    <li>Все правки текстов и реквизитов делаются в репозитории GitHub</li>
+  </ul>
+
+  <footer>
+    Документ подготовлен для заказчика сайта maservice.by.
+  </footer>
+
+</div>
+</body>
+</html>
