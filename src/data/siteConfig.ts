@@ -13,7 +13,7 @@ export const siteConfig = {
   },
   title: 'Ремонт дизельных и бензиновых форсунок в Минске | МАСервис',
   description: 'Проверка, диагностика и ремонт дизельных форсунок и ТНВД, бензиновых форсунок, РВД, дозировочных блоков. Ультразвуковая чистка топливной аппаратуры. Гарантия 12 месяцев.',
-  url: 'https://mosservice.by',
+  url: 'https://maservice.by',
   phonePrimary: '+375 (29) 181-81-32',
   phoneSecondary: '+375 (29) 181-81-32',
   phoneClean: '+375291818132',
@@ -32,14 +32,14 @@ export const siteConfig = {
   },
   workingHours: 'Ежедневно: 08:00 - 20:00, без выходных',
   workingHoursIso: 'Mo-Su 08:00-20:00',
-  email: 'info@mosservice.by',
+  email: 'info@maservice.by',
   ogImage: '/images/og/og-default.webp',
   priceRange: '$',
   experienceYears: 14,
   warranty: '12 месяцев или 20 000 км',
   social: {
     viber: 'viber://chat?number=%2B375291818132',
-    telegram: 'https://t.me/mosservice_by',
+    telegram: 'https://t.me/maservice_by',
     whatsapp: 'https://wa.me/375291818132',
   }
 };

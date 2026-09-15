@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mosservice.by/sitemap-index.xml
+Sitemap: https://maservice.by/sitemap-index.xml

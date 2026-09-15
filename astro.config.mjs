@@ -3,8 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://mosservice.by',
-  base: '/astro-mosservice/',
+  site: 'https://maservice.by',
   output: 'static',
   prefetch: {
     prefetchAll: true,
