@@ -6,9 +6,10 @@ export const siteConfig = {
   currency: 'BYN',
   currencyName: 'Белорусский рубль',
   bankDetails: {
-    account: 'BY19BLNB30120000279707000933',
-    bankName: 'ОАО «БНБ-Банк»',
-    bic: 'BLNBBY2X',
+    account: 'BY61PJCB30120895021000000933',
+    bankName: 'ОАО «Приорбанк»',
+    bic: 'PJCBBY2X',
+    bankAddress: 'г. Минск, ул. В. Хоружей, 31а',
     unp: '193933304',
   },
   title: 'Ремонт дизельных и бензиновых форсунок в Минске | МАСервис',
