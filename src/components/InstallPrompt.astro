@@ -1,0 +1,79 @@
+<div
+  id="pwa-install"
+  hidden
+  class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-md bg-dark-900 border border-slate-800 rounded-2xl shadow-2xl p-4 flex items-center gap-3"
+>
+  <img src="/icons/icon-192.png" alt="" class="w-11 h-11 rounded-xl shrink-0" />
+  <div class="flex-1 min-w-0">
+    <p class="text-white font-bold text-sm">Приложение «МАСервис»</p>
+    <p id="pwa-hint" class="text-slate-400 text-xs leading-snug">
+      Быстрый звонок и услуги — прямо с экрана телефона
+    </p>
+  </div>
+  <button
+    id="pwa-install-btn"
+    class="bg-primary-500 hover:bg-primary-600 text-dark-950 font-bold text-sm px-4 py-2 rounded-xl transition-colors shrink-0"
+  >
+    Установить
+  </button>
+  <button
+    id="pwa-close"
+    aria-label="Закрыть"
+    class="text-slate-500 hover:text-white text-2xl leading-none shrink-0 px-1"
+  >
+    ×
+  </button>
+</div>
+
+<script>
+  (function () {
+    const KEY = 'pwa-install-dismissed';
+    const banner = document.getElementById('pwa-install');
+    const btn = document.getElementById('pwa-install-btn');
+    const hint = document.getElementById('pwa-hint');
+    const close = document.getElementById('pwa-close');
+    if (!banner || !btn || !hint || !close) return;
+
+    let deferred: any = null;
+    const dismissed = () => {
+      try { return !!localStorage.getItem(KEY); } catch { return true; }
+    };
+    const dismiss = () => {
+      try { localStorage.setItem(KEY, '1'); } catch {}
+      banner.hidden = true;
+    };
+    const standalone = () =>
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (navigator as any).standalone === true;
+    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+    const show = () => {
+      if (!dismissed() && !standalone()) banner.hidden = false;
+    };
+
+    // Android/Chrome/Edge: событие приходит, когда сайт «устанавливаем» —
+    // показываем баннер с небольшой задержкой, чтобы не мешать сразу
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferred = e;
+      setTimeout(show, 8000);
+    });
+
+    // iOS: нативного промпта нет — показываем подсказку про «На экран Домой»
+    if (isIos) {
+      btn.hidden = true;
+      hint.textContent = '«Поделиться» → «На экран "Домой"» — и СТО будет под рукой';
+      setTimeout(show, 15000);
+    }
+
+    btn.addEventListener('click', async () => {
+      if (!deferred) return;
+      deferred.prompt();
+      await deferred.userChoice;
+      deferred = null;
+      dismiss();
+    });
+    close.addEventListener('click', dismiss);
+    window.addEventListener('appinstalled', dismiss);
+  })();
+</script>
