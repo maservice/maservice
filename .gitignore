@@ -16,6 +16,10 @@ pnpm-debug.log*
 .env.production
 .env.local
 
+# credentials (local only, not for public repo)
+CREDENTIALS.md
+CREDENTIALS.html
+
 # macOS
 .DS_Store
 

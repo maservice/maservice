@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import { url } from '@/utils/url';
+import { siteConfig } from '@/data/siteConfig';
+
+// Только опубликованные статьи (дата <= сегодня)
+const now = new Date();
+const allArticles = await getCollection('articles');
+const articles = allArticles
+  .filter(a => new Date(a.data.pubDate) <= now)
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+};
+---
+
+<Layout
+  title="Блог — статьи о ремонте топливной аппаратуры | МАСервис"
+  description="Полезные статьи о ремонте форсунок Common Rail, ТНВД, чистке и диагностике топливной системы. Советы специалистов с 14 годами опыта."
+  type="page"
+>
+  <section class="py-12 px-4">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-100 mb-4">
+        Блог
+      </h1>
+      <p class="text-slate-400 mb-8">
+        Статьи о ремонте топливной аппаратуры: форсунки Common Rail, ТНВД, диагностика, чистка. Пишем о реальных поломках и решениях из практики.
+      </p>
+
+      <div class="space-y-6">
+        {articles.map((article) => (
+          <article class="border border-slate-800 rounded-xl p-6 hover:border-slate-700 transition-colors">
+            <div class="flex items-center gap-3 text-sm text-slate-500 mb-3">
+              <time datetime={article.data.pubDate.toISOString()}>
+                {formatDate(article.data.pubDate)}
+              </time>
+              <span>·</span>
+              <span>{article.data.category}</span>
+            </div>
+            <h2 class="text-xl font-semibold text-slate-100 mb-2">
+              <a href={url(`/blog/${article.slug}`)} class="hover:text-primary-400 transition-colors">
+                {article.data.title}
+              </a>
+            </h2>
+            <p class="text-slate-400 mb-4">{article.data.description}</p>
+            <a
+              href={url(`/blog/${article.slug}`)}
+              class="text-primary-400 hover:text-primary-300 text-sm font-medium"
+            >
+              Читать далее →
+            </a>
+          </article>
+        ))}
+      </div>
+
+      {articles.length === 0 && (
+        <p class="text-slate-500 text-center py-12">Статей пока нет. Загляните позже.</p>
+      )}
+    </div>
+  </section>
+</Layout>
