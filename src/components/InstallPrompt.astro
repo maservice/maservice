@@ -1,33 +1,38 @@
 <div
   id="pwa-install"
-  hidden
-  class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-md bg-dark-900 border border-slate-800 rounded-2xl shadow-2xl p-4 flex items-center gap-3"
+  class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-md bg-dark-900 border border-slate-800 rounded-2xl shadow-2xl p-4"
 >
-  <img src="/icons/icon-192.png" alt="" class="w-11 h-11 rounded-xl shrink-0" />
-  <div class="flex-1 min-w-0">
-    <p class="text-white font-bold text-sm">Приложение «МАСервис»</p>
-    <p id="pwa-hint" class="text-slate-400 text-xs leading-snug">
-      Быстрый звонок и услуги — прямо с экрана телефона
-    </p>
+  <div class="flex items-start justify-between gap-2">
+    <div class="min-w-0">
+      <p class="text-white font-bold text-sm">Приложение «МАСервис»</p>
+      <p id="pwa-hint" class="text-slate-400 text-xs leading-snug mt-1">
+        Быстрый звонок и услуги — прямо с экрана телефона
+      </p>
+    </div>
+    <button
+      id="pwa-close"
+      aria-label="Закрыть"
+      class="text-slate-500 hover:text-white text-2xl leading-none shrink-0 px-1 -mt-1"
+    >
+      ×
+    </button>
   </div>
-  <button
-    id="pwa-install-btn"
-    class="bg-primary-500 hover:bg-primary-600 text-dark-950 font-bold text-sm px-4 py-2 rounded-xl transition-colors shrink-0"
-  >
-    Установить
-  </button>
-  <button
-    id="pwa-close"
-    aria-label="Закрыть"
-    class="text-slate-500 hover:text-white text-2xl leading-none shrink-0 px-1"
-  >
-    ×
-  </button>
+  <div class="mt-3 flex items-center gap-3">
+    <img src="/icons/icon-192.png" alt="" class="w-11 h-11 rounded-xl shrink-0" />
+    <button
+      id="pwa-install-btn"
+      class="flex-1 bg-primary-500 hover:bg-primary-600 text-dark-950 font-bold text-sm px-4 py-2.5 rounded-xl transition-colors"
+    >
+      Установить
+    </button>
+  </div>
 </div>
 
 <script>
   (function () {
-    const KEY = 'pwa-install-dismissed';
+    const SNOOZE_KEY = 'pwa-install-snooze';
+    const INSTALLED_KEY = 'pwa-installed';
+    const SNOOZE_MS = 3 * 24 * 60 * 60 * 1000; // 3 дня
     const banner = document.getElementById('pwa-install');
     const btn = document.getElementById('pwa-install-btn');
     const hint = document.getElementById('pwa-hint');
@@ -35,21 +40,22 @@
     if (!banner || !btn || !hint || !close) return;
 
     let deferred: any = null;
-    const dismissed = () => {
-      try { return !!localStorage.getItem(KEY); } catch { return true; }
+    const storage = {
+      get(k: string) { try { return localStorage.getItem(k); } catch { return null; } },
+      set(k: string, v: string) { try { localStorage.setItem(k, v); } catch {} },
     };
-    const dismiss = () => {
-      try { localStorage.setItem(KEY, '1'); } catch {}
-      banner.hidden = true;
-    };
+    const installed = () => !!storage.get(INSTALLED_KEY);
+    const snoozed = () => Date.now() < Number(storage.get(SNOOZE_KEY) || 0);
+    const snooze = () => storage.set(SNOOZE_KEY, String(Date.now() + SNOOZE_MS));
     const standalone = () =>
       window.matchMedia('(display-mode: standalone)').matches ||
       (navigator as any).standalone === true;
     const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
 
     const show = () => {
-      if (!dismissed() && !standalone()) banner.hidden = false;
+      if (!installed() && !standalone() && !snoozed()) banner.classList.remove('hidden');
     };
+    const hide = () => banner.classList.add('hidden');
 
     // Android/Chrome/Edge: событие приходит, когда сайт «устанавливаем» —
     // показываем баннер с небольшой задержкой, чтобы не мешать сразу
@@ -71,9 +77,13 @@
       deferred.prompt();
       await deferred.userChoice;
       deferred = null;
-      dismiss();
+      hide();
+      snooze();
     });
-    close.addEventListener('click', dismiss);
-    window.addEventListener('appinstalled', dismiss);
+    close.addEventListener('click', () => { hide(); snooze(); });
+    window.addEventListener('appinstalled', () => {
+      storage.set(INSTALLED_KEY, '1');
+      hide();
+    });
   })();
 </script>
