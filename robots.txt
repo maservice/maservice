@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://maservice.by/sitemap-index.xml
