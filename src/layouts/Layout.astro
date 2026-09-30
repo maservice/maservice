@@ -106,5 +106,10 @@ const canonicalUrl = slug ? `${siteConfig.url}/uslugi/${slug}` : siteConfig.url;
     </main>
     <Footer showContactWidget={shouldShowContact} />
     <Analytics />
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
   </body>
 </html>
